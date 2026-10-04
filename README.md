@@ -780,6 +780,10 @@ python3 src/peer_valuation.py
 python3 src/analyze_dao_financials.py
 python3 src/scenario_valuation.py
 ```
+Run the Full Pipeline:
+
+```bash
+python3 run_analysis.py
 
 Generate charts:
 
