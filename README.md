@@ -780,19 +780,22 @@ python3 src/peer_valuation.py
 python3 src/analyze_dao_financials.py
 python3 src/scenario_valuation.py
 ```
-Run the Full Pipeline:
+### Run the Full Pipeline
+
+Run the complete research pipeline with a single command:
 
 ```bash
 python3 run_analysis.py
-
-Generate charts:
-
-```bash
-python3 src/create_charts.py
 ```
 
----
+This command automatically:
 
+1. Fetches the latest protocol and market data.
+2. Runs the fundamental analysis.
+3. Calculates peer and valuation metrics.
+4. Generates all research charts.
+
+Individual scripts in `src/` can also be executed separately for specific parts of the analysis.
 ## 22. Limitations
 
 This project has several important limitations:
