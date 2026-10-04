@@ -1,0 +1,18 @@
+{
+    "id": "aave",
+    "symbol": "AAVE",
+    "name": "Aave",
+    "price_usd": 180.02,
+    "market_cap_usd": 2778994090,
+    "fdv_usd": 2880651382,
+    "circulating_supply": 15435364.972095434,
+    "total_supply": 16000000.0,
+    "max_supply": 16000000.0,
+    "market_cap_rank": 42,
+    "price_change_24h_pct": 0.44544,
+    "price_change_7d_pct": 16.01897,
+    "price_change_30d_pct": 38.2024,
+    "ath_usd": 661.69,
+    "ath_change_pct": -72.79316,
+    "ath_date": "2021-05-18T13:19:59.000Z"
+}
