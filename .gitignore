@@ -25,3 +25,5 @@ env/
 build/
 dist/
 *.egg-info/
+# Test artifacts
+.pytest_cache/
