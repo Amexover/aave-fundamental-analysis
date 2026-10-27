@@ -21,14 +21,14 @@ PEER_VALUATION_PATH = "data/processed/lending_peer_valuation.csv"
 
 TOKEN_PATH = "data/raw/aave_token_data.json"
 
-CHARTS_DIR = Path("charts/redesigned")
+CHARTS_DIR = Path("charts/dark")
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans Mono", "font.size": 10,
-    "axes.axisbelow": True, "axes.labelcolor": "#777974",
-    "xtick.color": "#8b8d89", "ytick.color": "#8b8d89",
-    "text.color": "#222321",
-    "axes.prop_cycle": plt.cycler(color=["#4256ae", "#8bcf9c"]),
+    "axes.axisbelow": True, "axes.labelcolor": "#c4c9d0",
+    "xtick.color": "#b4bdc7", "ytick.color": "#b4bdc7",
+    "text.color": "#f2f5f7",
+    "axes.prop_cycle": plt.cycler(color=["#7894ff", "#86e0b0"]),
 })
 
 
@@ -36,22 +36,22 @@ def style_chart(fig, ax, subtitle):
     """Apply the shared research chart layout."""
     title = ax.get_title().lower()
     ax.set_title("")
-    fig.set_facecolor("#f3f2ee")
+    fig.set_facecolor("#000000")
     fig.add_artist(Rectangle((0.015, 0.02), 0.97, 0.96,
-        transform=fig.transFigure, facecolor="#fbfbf9",
-        edgecolor="#d2d2ce", linewidth=0.8, zorder=-10))
+        transform=fig.transFigure, facecolor="#000000",
+        edgecolor="#414952", linewidth=0.8, zorder=-10))
     ax.set_facecolor("none")
     for spine in ax.spines.values():
         spine.set_visible(False)
     ax.tick_params(length=0, pad=6)
     if not ax.images:
         for line in ax.get_xgridlines() + ax.get_ygridlines():
-            line.set_color("#e2e3df")
+            line.set_color("#303740")
             line.set_alpha(1)
     fig.text(0.045, 0.94, title, fontsize=15, weight="bold", va="top")
-    fig.text(0.045, 0.89, subtitle, fontsize=9, color="#8b8d89", va="top")
+    fig.text(0.045, 0.89, subtitle, fontsize=9, color="#b4bdc7", va="top")
     fig.text(0.045, 0.035, "source: project data snapshot  |  see README for methodology",
-             fontsize=7.5, color="#92948f", va="bottom")
+             fontsize=7.5, color="#b4bdc7", va="bottom")
     fig.subplots_adjust(left=0.14, right=0.93, top=0.80, bottom=0.19)
 
 

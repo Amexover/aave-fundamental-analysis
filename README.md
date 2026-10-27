@@ -6,7 +6,7 @@
 
 > The figures below describe the dataset used in this research, not live market data. Check the underlying sources and dates before using the analysis.
 
-![Aave TVL history](charts/redesigned/aave_tvl_history.png)
+![Aave TVL history](charts/dark/aave_tvl_history.png)
 
 **Data-driven fundamental analysis of Aave covering lending economics, protocol revenue, DAO profitability, competitive positioning, token economics, and AAVE valuation.**
 
@@ -118,7 +118,7 @@ This suggests that Aave's current liquidity base is more productive from a fee-g
 
 ## 3. TVL Dynamics
 
-![Aave V3 TVL History](charts/redesigned/aave_tvl_history.png)
+![Aave V3 TVL History](charts/dark/aave_tvl_history.png)
 
 Aave V3 TVL in the dataset:
 
@@ -164,7 +164,7 @@ This is a **snapshot-based annualized estimate**, not realized Aave protocol rev
 
 ### Borrow Composition
 
-![Aave Borrow Composition](charts/redesigned/aave_borrow_composition.png)
+![Aave Borrow Composition](charts/dark/aave_borrow_composition.png)
 
 Borrowing is extremely concentrated.
 
@@ -218,7 +218,7 @@ As a result, aggregate TVL materially overstates the amount of capital directly 
 
 ## 6. Protocol Economics
 
-![Aave Monthly Fees and Revenue](charts/redesigned/aave_monthly_fees_revenue.png)
+![Aave Monthly Fees and Revenue](charts/dark/aave_monthly_fees_revenue.png)
 
 The analysis separates user-paid fees from protocol revenue.
 
@@ -270,7 +270,7 @@ or
 
 ## 7. Capital Productivity
 
-![Lending Fee Productivity](charts/redesigned/lending_fee_productivity.png)
+![Lending Fee Productivity](charts/dark/lending_fee_productivity.png)
 
 To compare lending protocols, this project uses:
 
@@ -349,7 +349,7 @@ The market is therefore valuing two different profiles:
 
 ## 9. Peer Valuation
 
-![Lending Peer Valuation](charts/redesigned/lending_peer_valuation.png)
+![Lending Peer Valuation](charts/dark/lending_peer_valuation.png)
 
 Approximate valuation metrics:
 
@@ -485,7 +485,7 @@ Therefore, **TTM revenue currently makes AAVE appear cheaper than the latest rev
 
 ## 13. Scenario Analysis
 
-![AAVE Valuation Sensitivity](charts/redesigned/aave_valuation_sensitivity.png)
+![AAVE Valuation Sensitivity](charts/dark/aave_valuation_sensitivity.png)
 
 A simplified scenario framework uses:
 
@@ -705,7 +705,7 @@ Key methodological principles:
 aave-fundamental-analysis/
 │
 ├── charts/
-│   ├── redesigned/          # Charts used in this README
+│   ├── dark/                # Charts used in this README
 │   ├── aave_borrow_composition.png
 │   ├── aave_monthly_fees_revenue.png
 │   ├── aave_tvl_history.png
