@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import argparse
 from pathlib import Path
 
 
@@ -74,6 +75,9 @@ def run_stage(stage_name, scripts):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Run the Aave research pipeline")
+    parser.add_argument("--offline", action="store_true", help="Use the saved raw data without fetching")
+    args = parser.parse_args()
 
     print()
     print("=" * 60)
@@ -84,10 +88,13 @@ def main():
     print(f"Project root: {PROJECT_ROOT}")
     print(f"Python: {sys.executable}")
 
-    run_stage(
-        "STAGE 1 — FETCHING DATA",
-        FETCH_SCRIPTS,
-    )
+    if not args.offline:
+        run_stage(
+            "STAGE 1 — FETCHING DATA",
+            FETCH_SCRIPTS,
+        )
+    else:
+        print("Using saved raw data; network fetch skipped.")
 
     run_stage(
         "STAGE 2 — FUNDAMENTAL ANALYSIS",
@@ -108,7 +115,7 @@ def main():
     print("Outputs:")
     print("  Raw data:       data/raw/")
     print("  Processed data: data/processed/")
-    print("  Charts:         charts/")
+    print("  Charts:         charts/rounded/")
     print()
 
 
