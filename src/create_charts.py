@@ -3,6 +3,8 @@ import json
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.patches import Rectangle
+from matplotlib.colors import LinearSegmentedColormap
 
 
 # ============================================================
@@ -20,6 +22,37 @@ PEER_VALUATION_PATH = "data/processed/lending_peer_valuation.csv"
 TOKEN_PATH = "data/raw/aave_token_data.json"
 
 CHARTS_DIR = Path("charts")
+
+plt.rcParams.update({
+    "font.family": "DejaVu Sans Mono", "font.size": 10,
+    "axes.axisbelow": True, "axes.labelcolor": "#777974",
+    "xtick.color": "#8b8d89", "ytick.color": "#8b8d89",
+    "text.color": "#222321",
+    "axes.prop_cycle": plt.cycler(color=["#4256ae", "#8bcf9c"]),
+})
+
+
+def style_chart(fig, ax, subtitle):
+    """Apply the shared research chart layout."""
+    title = ax.get_title().lower()
+    ax.set_title("")
+    fig.set_facecolor("#f3f2ee")
+    fig.add_artist(Rectangle((0.015, 0.02), 0.97, 0.96,
+        transform=fig.transFigure, facecolor="#fbfbf9",
+        edgecolor="#d2d2ce", linewidth=0.8, zorder=-10))
+    ax.set_facecolor("none")
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    ax.tick_params(length=0, pad=6)
+    if not ax.images:
+        for line in ax.get_xgridlines() + ax.get_ygridlines():
+            line.set_color("#e2e3df")
+            line.set_alpha(1)
+    fig.text(0.045, 0.94, title, fontsize=15, weight="bold", va="top")
+    fig.text(0.045, 0.89, subtitle, fontsize=9, color="#8b8d89", va="top")
+    fig.text(0.045, 0.035, "source: project data snapshot  |  see README for methodology",
+             fontsize=7.5, color="#92948f", va="bottom")
+    fig.subplots_adjust(left=0.14, right=0.93, top=0.80, bottom=0.19)
 
 
 # ============================================================
@@ -78,6 +111,8 @@ def create_tvl_chart():
     )
 
     fig.tight_layout()
+
+    style_chart(fig, ax, 'historical total value locked  |  usd billions')
 
     output = (
         CHARTS_DIR
@@ -232,7 +267,7 @@ def create_monthly_economics_chart():
         ha="right",
     )
 
-    ax.legend()
+    ax.legend(frameon=False, loc="upper left", ncol=2)
 
     ax.grid(
         axis="y",
@@ -240,6 +275,8 @@ def create_monthly_economics_chart():
     )
 
     fig.tight_layout()
+
+    style_chart(fig, ax, 'fees and protocol revenue  |  complete months  |  usd millions')
 
     output = (
         CHARTS_DIR
@@ -366,6 +403,8 @@ def create_borrow_composition_chart():
 
     fig.tight_layout()
 
+    style_chart(fig, ax, 'ethereum v3 reserves  |  share of borrowed assets')
+
     output = (
         CHARTS_DIR
         / "aave_borrow_composition.png"
@@ -444,6 +483,8 @@ def create_peer_productivity_chart():
         )
 
     fig.tight_layout()
+
+    style_chart(fig, ax, 'annualized 30-day fees / current tvl  |  percent')
 
     output = (
         CHARTS_DIR
@@ -528,6 +569,8 @@ def create_peer_valuation_chart():
         )
 
     fig.tight_layout()
+
+    style_chart(fig, ax, 'fully diluted valuation / annualized 30-day fees')
 
     output = (
         CHARTS_DIR
@@ -622,6 +665,7 @@ def create_valuation_sensitivity_chart():
     image = ax.imshow(
         sensitivity,
         aspect="auto",
+        cmap=LinearSegmentedColormap.from_list("research", ["#e4eee8", "#8bcf9c", "#4256ae"]),
     )
 
     ax.set_title(
@@ -686,6 +730,7 @@ def create_valuation_sensitivity_chart():
                 ha="center",
                 va="center",
                 fontsize=9,
+                color="white" if price > max(map(max, sensitivity)) * 0.62 else "#202622",
             )
 
     # --------------------------------------------------------
@@ -707,9 +752,9 @@ def create_valuation_sensitivity_chart():
 
     fig.text(
         0.5,
-        0.01,
+        0.075,
         (
-            f"Current AAVE price: "
+            f"Snapshot AAVE price: "
             f"${current_price:.2f}"
         ),
         ha="center",
@@ -724,6 +769,8 @@ def create_valuation_sensitivity_chart():
             1,
         ]
     )
+
+    style_chart(fig, ax, 'scenario model  |  annual revenue and revenue multiple')
 
     output = (
         CHARTS_DIR
