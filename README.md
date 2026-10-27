@@ -1,18 +1,14 @@
 # Aave Fundamental Analysis
 
-**Researching the protocol, the lending market, and the AAVE token.**
+A research project on Aave's lending activity, protocol economics, DAO finances, competitors, and AAVE token valuation.
 
-[Key findings](#key-findings) · [Lending economics](#4-lending-economics) · [Valuation](#12-valuation) · [Methodology](#19-methodology) · [Run the analysis](#21-running-the-analysis)
+> **Historical research, not live data.** The saved TVL, fees and revenue series end on **4 October 2026**. The research uses a mixture of datasets; the collection date of some snapshots is not recorded. The thesis and figures below are fixed to the original analysis, not automatically updated market information.
 
-> The figures below describe the dataset used in this research, not live market data. Check the underlying sources and dates before using the analysis.
+**Research question:** Can Aave turn its lending position into sustainable DAO surplus and value accrual for AAVE holders?
 
-![Aave TVL history](charts/rounded/aave_tvl_history.png)
+**Main findings:** Lending is concentrated in a few assets; protocol fees, protocol revenue and DAO income measure different things; token value capture depends on governance and is not a direct claim on protocol revenue. The original investment view was neutral to moderately bullish at the analyzed snapshot.
 
-**Data-driven fundamental analysis of Aave covering lending economics, protocol revenue, DAO profitability, competitive positioning, token economics, and AAVE valuation.**
-
-> **Investment View: Neutral / Moderately Bullish**
-
-This project combines protocol-level data, reserve-level lending data, DAO financials, token market data, and peer analysis to evaluate Aave as both a DeFi protocol and an investable crypto asset.
+[Key findings](#key-findings) · [Charts](#3-tvl-dynamics) · [Sources](#18-data-sources) · [Methodology](#19-methodology) · [Run and test](#21-running-the-analysis)
 
 ---
 
@@ -634,7 +630,7 @@ The bear case includes:
 - weak connection between protocol economics and AAVE;
 - valuation multiples compressing as growth expectations fall.
 
-### Current View
+### View at the analyzed snapshot
 
 > **Neutral / Moderately Bullish**
 
@@ -662,6 +658,15 @@ It requires Aave to demonstrate that it can grow normalized economic output and 
 | DAO Financials | Aave ecosystem financial reporting / Aave Insights | DAO revenue, expenses and net income |
 
 Data is stored locally in `data/raw/` and transformed outputs are stored in `data/processed/`.
+
+| Saved dataset | Last observation / date information |
+|---|---|
+| TVL | 4 October 2026, 16:45:59 in the CSV |
+| Daily fees and revenue | 4 October 2026 |
+| Reserve, peer and token snapshots | Collection dates were not saved in these files; the timestamps cannot be verified from the repository. |
+| DAO finances | 2025 full year and 2026 year-to-date; the YTD cutoff is not specified in the file. |
+
+DefiLlama data is fetched from its [Aave V3 protocol endpoint](https://api.llama.fi/protocol/aave-v3) and [fees endpoint](https://api.llama.fi/summary/fees/aave); token data uses the [CoinGecko AAVE endpoint](https://api.coingecko.com/api/v3/coins/aave), and reserve data uses the [Aave GraphQL API](https://api.v3.aave.com/graphql). The exact source document and collection dates for the saved DAO figures are not recorded, so those figures should be independently checked before reuse.
 
 ---
 
@@ -705,13 +710,7 @@ Key methodological principles:
 aave-fundamental-analysis/
 │
 ├── charts/
-│   ├── rounded/             # Charts used in this README
-│   ├── aave_borrow_composition.png
-│   ├── aave_monthly_fees_revenue.png
-│   ├── aave_tvl_history.png
-│   ├── aave_valuation_sensitivity.png
-│   ├── lending_fee_productivity.png
-│   └── lending_peer_valuation.png
+│   └── rounded/             # Charts displayed in this README
 │
 ├── data/
 │   ├── raw/
@@ -736,9 +735,12 @@ aave-fundamental-analysis/
 │   ├── peer_valuation.py
 │   └── scenario_valuation.py
 │
-├── .gitignore
+├── tests/
+├── .github/workflows/
+├── LICENSE
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── requirements-dev.txt
 ```
 
 ---
@@ -752,7 +754,7 @@ git clone https://github.com/Amexover/aave-fundamental-analysis.git
 cd aave-fundamental-analysis
 ```
 
-Create a virtual environment:
+Requires Python 3.11 or later. Create a virtual environment:
 
 ```bash
 python3 -m venv .venv
@@ -765,7 +767,15 @@ Install dependencies:
 python3 -m pip install -r requirements.txt
 ```
 
-Fetch the main datasets:
+To reproduce analysis from the saved raw data without an API connection:
+
+```bash
+python3 run_analysis.py --offline
+```
+
+This recalculates processed files and regenerates charts. The written research and its figures in this README are not automatically rewritten. To fetch newer data instead, use the full pipeline below. It overwrites saved API data and generated outputs; review the changes before committing them. DAO financials are a separate saved input and are not fetched by the pipeline.
+
+Alternatively, fetch the main datasets individually:
 
 ```bash
 python3 src/fetch_defillama.py
@@ -804,7 +814,17 @@ This command automatically:
 3. Calculates peer and valuation metrics.
 4. Generates all research charts.
 
-Individual scripts in `src/` can also be executed separately for specific parts of the analysis.
+Individual scripts in `src/` can also be executed separately for specific parts of the analysis. Refreshing the data does not update this report's historical prose or investment view.
+
+### Run the tests
+
+```bash
+python3 -m pip install -r requirements-dev.txt
+python3 -m pytest -q
+```
+
+GitHub Actions runs the tests on Python 3.11 and 3.12 for pushes and pull requests.
+
 ## 22. Limitations
 
 This project has several important limitations:
@@ -838,3 +858,7 @@ This project has several important limitations:
 This project is for educational and research purposes only.
 
 It is not investment advice.
+
+## License
+
+The original source code is available under the [MIT License](LICENSE). Third-party data and content remain subject to their respective providers' terms; the research text and conclusions are not covered by this code license.
