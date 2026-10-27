@@ -1,5 +1,13 @@
 # Aave Fundamental Analysis
 
+**Researching the protocol, the lending market, and the AAVE token.**
+
+[Key findings](#key-findings) · [Lending economics](#4-lending-economics) · [Valuation](#12-valuation) · [Methodology](#19-methodology) · [Run the analysis](#21-running-the-analysis)
+
+> The figures below describe the dataset used in this research, not live market data. Check the underlying sources and dates before using the analysis.
+
+![Aave TVL history](charts/aave_tvl_history.png)
+
 **Data-driven fundamental analysis of Aave covering lending economics, protocol revenue, DAO profitability, competitive positioning, token economics, and AAVE valuation.**
 
 > **Investment View: Neutral / Moderately Bullish**
