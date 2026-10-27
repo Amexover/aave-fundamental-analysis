@@ -21,7 +21,7 @@ PEER_VALUATION_PATH = "data/processed/lending_peer_valuation.csv"
 
 TOKEN_PATH = "data/raw/aave_token_data.json"
 
-CHARTS_DIR = Path("charts")
+CHARTS_DIR = Path("charts/redesigned")
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans Mono", "font.size": 10,
