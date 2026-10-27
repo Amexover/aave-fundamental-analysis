@@ -42,10 +42,10 @@ def safe_divide(
     denominator,
 ):
 
-    if numerator is None:
+    if pd.isna(numerator):
         return None
 
-    if denominator is None:
+    if pd.isna(denominator):
         return None
 
     if denominator == 0:
@@ -91,17 +91,8 @@ def build_peer_dataframe(data):
         # Annualized current run-rate
         # ----------------------------------------------------
 
-        annualized_fees_30d = (
-            fees_30d
-            / 30
-            * 365
-        )
-
-        annualized_revenue_30d = (
-            revenue_30d
-            / 30
-            * 365
-        )
+        annualized_fees_30d = None if pd.isna(fees_30d) else fees_30d / 30 * 365
+        annualized_revenue_30d = None if pd.isna(revenue_30d) else revenue_30d / 30 * 365
 
         # ----------------------------------------------------
         # Take rates
