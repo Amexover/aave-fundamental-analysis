@@ -3,7 +3,8 @@ import json
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Rectangle, PathPatch
+from matplotlib.path import Path as DrawPath
 from matplotlib.colors import LinearSegmentedColormap
 
 
@@ -21,7 +22,7 @@ PEER_VALUATION_PATH = "data/processed/lending_peer_valuation.csv"
 
 TOKEN_PATH = "data/raw/aave_token_data.json"
 
-CHARTS_DIR = Path("charts/dark")
+CHARTS_DIR = Path("charts/rounded")
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans Mono", "font.size": 10,
@@ -53,6 +54,41 @@ def style_chart(fig, ax, subtitle):
     fig.text(0.045, 0.035, "source: project data snapshot  |  see README for methodology",
              fontsize=7.5, color="#b4bdc7", va="bottom")
     fig.subplots_adjust(left=0.14, right=0.93, top=0.80, bottom=0.19)
+    for line in ax.lines:
+        line.set_solid_capstyle("round")
+        line.set_solid_joinstyle("round")
+        line.set_antialiased(True)
+    round_bars(fig, ax)
+
+
+def round_bars(fig, ax):
+    """Round bar corners in screen space without changing the bar values."""
+    fig.canvas.draw()
+    inverse = ax.transData.inverted()
+    origin = inverse.transform((0, 0))
+    radius = inverse.transform((4, 4)) - origin
+    for bar in list(ax.patches):
+        if not isinstance(bar, Rectangle):
+            continue
+        x, y = bar.get_xy()
+        w, h = bar.get_width(), bar.get_height()
+        if w <= 0 or h <= 0:
+            continue
+        rx, ry = min(abs(radius[0]), w / 2), min(abs(radius[1]), h / 2)
+        vertices = [
+            (x + rx, y), (x + w - rx, y), (x + w, y), (x + w, y + ry),
+            (x + w, y + h - ry), (x + w, y + h), (x + w - rx, y + h),
+            (x + rx, y + h), (x, y + h), (x, y + h - ry),
+            (x, y + ry), (x, y), (x + rx, y), (x + rx, y),
+        ]
+        codes = [DrawPath.MOVETO, DrawPath.LINETO, DrawPath.CURVE3, DrawPath.CURVE3,
+                 DrawPath.LINETO, DrawPath.CURVE3, DrawPath.CURVE3,
+                 DrawPath.LINETO, DrawPath.CURVE3, DrawPath.CURVE3,
+                 DrawPath.LINETO, DrawPath.CURVE3, DrawPath.CURVE3, DrawPath.CLOSEPOLY]
+        patch = PathPatch(DrawPath(vertices, codes), facecolor=bar.get_facecolor(),
+                          edgecolor="none", zorder=bar.get_zorder(), antialiased=True)
+        ax.add_patch(patch)
+        bar.remove()
 
 
 # ============================================================
